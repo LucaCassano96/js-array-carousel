@@ -1,117 +1,93 @@
-
 /* Dato un array contenente una lista di cinque immagini */
 
-const immagini = ["img/01.webp", "img/02.webp", "img/03.webp", "img/04.webp", "img/05.webp"];
+const carouselImages = ["img/01.webp", "img/02.webp", "img/03.webp", "img/04.webp", "img/05.webp"];
+
 
 /* inseriamo le immagini nell'html */
+for (let i = 0; i < carouselImages.length; i++) {
 
-for (let i = 0; i < immagini.length; i++) {
-    const element = immagini[i];
+    const carouselImage = carouselImages[i];
+    const carouselContainer = document.querySelector("#container");
+    const carouselElement = `<div class="item hidden"> <img src="${carouselImage}" alt="immagine"></div>`;
+    carouselContainer.innerHTML += carouselElement;
 
-    console.log(element);
-
-    const lista = document.querySelector("#container");
-    const item = `<div class="item hidden"> <img src="${element}" alt="immagine"></div>`;
-    lista.innerHTML += item;
-
-/* inseriamo la classe active al primo elemento */
-
-    elementZero = immagini[0];
-    const primoElemento = document.querySelector(".item").classList.add("active");;
-    elementZero.innerHTML += primoElemento;
 }
 
-/* seleziono in un arrey tutti gli elementi per poterli gestire */
 
-const divItems = document.querySelectorAll(".item");
-console.log(divItems);
+/* seleziono in un array tutti gli elementi per poterli gestire */
+const carouselElements = document.querySelectorAll(".item");
 
-let divActive = 0;
+let activeElement = 0;
 
+const carouselLastElement = carouselElements.length - 1;
+
+/* inseriamo la classe active all elemento iniziale attivo */
+carouselElements[activeElement].classList.add('active')
+
+/* seleziono pulsanti avanti indietro */
+const buttonIndietro = document.querySelector(".button_indietro");
 const buttonAvanti = document.querySelector(".button_avanti");
-console.log(buttonAvanti);
+
+
+if (activeElement === 0) {
+    buttonIndietro.classList.add("bottone_none");
+}
+
+
+if (activeElement === carouselLastElement) {
+    buttonAvanti.classList.add("bottone_none");
+}
+
 
 /* gestisco l'evento sul click avanti */
+buttonAvanti.addEventListener("click", function () {
 
-buttonAvanti.addEventListener("click",
-function(){
+    const oldActiveElement = activeElement;
 
-    if (divActive < divItems.length -1 ) {
-
-        divItems[divActive].classList.remove("active");
-        divActive = divActive + 1;
-        divItems[divActive].classList.add("active");
-    }
     
+    activeElement = activeElement + 1;
 
-    if (divActive === divItems.length -1) {
+    carouselElements[activeElement].classList.add('active')
+    carouselElements[oldActiveElement].classList.remove('active')
+
+    if (activeElement === carouselLastElement) {
         buttonAvanti.classList.add("bottone_none");
-        
     }
 
-}
-
-)
-
-let divActive2 = 4;
-
-const buttonIndietro = document.querySelector(".button_indietro");
-console.log(buttonIndietro);
-
-/* gestisco l'evento sul click indietro */
-
-buttonIndietro.addEventListener("click",
-function(){
-
-    if (divActive2 === divItems.length ) {
-
-        divItems[divActive2].classList.remove("active");
-        divActive2 = divActive2 -1;
-        divItems[divActive2].classList.add("active");
+    if (activeElement !== 0) {
+        buttonIndietro.classList.remove("bottone_none");
     }
-    
-
-    if (divActive2 === divItems.length +1) {
-        buttonIndietro.classList.add("bottone_none");
-        
-    }
-
-    
 
 })
 
+
+/* gestisco l'evento sul click indietro */
+buttonIndietro.addEventListener("click", function () {
+
+    const oldActiveElement = activeElement;
+
+    activeElement = activeElement - 1;
+
+  
+    carouselElements[activeElement].classList.add('active')
+    carouselElements[oldActiveElement].classList.remove('active')
+
    
-    
+    if (activeElement === 0) {
+        buttonIndietro.classList.add("bottone_none");
+    }
+
+    if (activeElement !== carouselLastElement) {
+        buttonAvanti.classList.remove("bottone_none");
+    }
+
+})
 
 
 
 
 
 
-    
-   
-   
-    
 
-
-
-
-/* inserire immagini nel div container */
-
-    /* creare div con classe item */
-
- /* for (let i = 0; i < immagini.length; i++) { */
- /*    const element = immagini[i]; */
- /*     */
- /*    document.getElementById('container').innerHTML += '<div class="item active"></div>'; */
-
- /*    /* inserire img nel div con classe item */ 
-
- /*    const img = document.getElementsByClassName("item"); */
-
- /*    img[0].innerHTML = '<img src="">'; */
-
-
- /* } */
 
 
